@@ -1,4 +1,4 @@
-const VERSION='1.1.0';
+const VERSION='1.2.0';
 const CACHE='odkrywczyni-v'+VERSION;
 const CORE=['./','./index.html','./style.css?v='+VERSION,'./data.js?v='+VERSION,'./app.js?v='+VERSION,'./audio-map.js?v='+VERSION,'./manifest.webmanifest','./audio-list.json','./icons/icon-192.png','./icons/icon-512.png'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(CORE.map(p=>new Request(new URL(p,self.registration.scope),{cache:'reload'})));const res=await c.match('./audio-list.json');const sounds=await res.json();for(let i=0;i<sounds.length;i+=25)await Promise.allSettled(sounds.slice(i,i+25).map(sound=>c.add(sound)));await self.skipWaiting()})()));
